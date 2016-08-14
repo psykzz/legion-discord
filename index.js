@@ -21,7 +21,7 @@ function sendToAll(message) {
 }
 
 function timeUntilInvasion() {
-    var current_time = new Date(),
+    var current_time = new time.Date(),
         current_time.setTimezone(TIMEZONE),
         hour = current_time.getHours(),
         minute = current_time.getMinutes(),
@@ -48,12 +48,12 @@ client.on("message", function(message) {
     }
 
     if(message.content.indexOf("!invasion") === 0) {
-        var time_until = timeUntilInvasion();
-        var hour_left = time_until[0];
-        var minute_left = time_until[1];
+        var time_until = timeUntilInvasion(),
+        hour_left = time_until[0],
+        minute_left = time_until[1];
 
-        var text_hour = ((hour_left != 1) ? "hours" : "hour");
-        var text_minute = ((minute_left != 1) ? "minutes" : "minute");
+        var text_hour = ((hour_left != 1) ? "hours" : "hour"),
+        text_minute = ((minute_left != 1) ? "minutes" : "minute");
 
         return  client.reply(message, `next Invasion starts in ${hour_left} ${text_hour} ${minute_left} ${text_minute}`);
     }

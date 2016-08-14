@@ -1,6 +1,7 @@
+var Discord = require("discord.js");
 var CronJob = require('cron').CronJob;
-var client = require("discord.js").Client();
 
+var client = new Discord.Client();
 var invasionFrequencyHours = 4;
 
 

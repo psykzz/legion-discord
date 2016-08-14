@@ -21,9 +21,10 @@ function sendToAll(message) {
 }
 
 function timeUntilInvasion() {
-    var current_time = new time.Date(),
-        current_time.setTimezone(TIMEZONE),
-        hour = current_time.getHours(),
+    var current_time = new time.Date();
+        current_time.setTimezone(TIMEZONE);
+
+    var hour = current_time.getHours(),
         minute = current_time.getMinutes(),
         hour_left = ((Math.floor(hour/invasionFrequencyHours)+1)*invasionFrequencyHours)-hour-(minute>0?1:0),
         minute_left = 60 - (minute);

@@ -1,3 +1,4 @@
+'use strict';
 var Discord = require("discord.js"),
     CronJob = require('cron').CronJob,
     time = require('time'),

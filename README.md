@@ -4,7 +4,11 @@ Will alert on the next legion invasion, automatically and on command
 
 ### To add this bot to your discord server, **[click here](https://discordapp.com/oauth2/authorize?client_id=214431597347209216&scope=bot&permissions=0)**
 
+### Example usage
+
 ![](http://i.imgur.com/SI1gG4a.png)
+
+![](http://i.imgur.com/CCZJGAV.png)
 
 > Discord bot configuration, bot token, and server management is required to complete the installation of this bot.
 

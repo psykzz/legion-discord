@@ -2,6 +2,7 @@
 var Discord = require("discord.js"),
     CronJob = require('cron').CronJob,
     time = require('time'),
+    fs = require("fs"),
     moment = require('moment'),
     Sugar = require('sugar'),
     TIMEZONE = "Europe/London";
@@ -66,12 +67,19 @@ client.on("message", function(message) {
             "!help - This help text");
     }
 
+    if(message.content.indexOf("!time") === 0) {
+        message.reply(`it's ${moment().format("ddd Do "/*MMM*/+"@ HH:mm")}`)
+    }
+
+    // if(message.content.indexOf("!doit") === 0) {
+    //     message.reply(`alright, shitting in @Alljump's bed`)
+    // }
+
     if(message.content.indexOf("!raid ") === 0) {
         var msg = betterSplit(message.content)[1]
 
         var description = betterSplit(msg, " on ")[0]
         var timing = betterSplit(msg, " on ")[1]
-
 
         // Going back 10 times see if we can get a date
         var count = 0,
@@ -79,7 +87,7 @@ client.on("message", function(message) {
             currentWord = '';
         timing.split(" ").reverse().every(function(word) {
             currentWord = `${word} ${currentWord}`.trim() 
-            _eventDate = Sugar.Date.create(currentWord)
+            var _eventDate = moment(Sugar.Date.create(currentWord, {future: true})).utcOffset(-60)
             if (_eventDate) {
                 eventDate = _eventDate;
             }
@@ -89,7 +97,7 @@ client.on("message", function(message) {
             return (count++ < 10); // stop at larger count
         })
 
-        message.reply(`Creating new raid: ${description} on ${moment(eventDate).format("ddd Do "/*MMM*/+" @ HH:mm")}`);
+        message.reply(`Creating new raid: ${description} on ${moment(eventDate).utc().format("ddd Do "/*MMM*/+"@ HH:mm")}`);
 
         raids[Object.keys(raids).length] = {
             time: eventDate,
@@ -103,7 +111,7 @@ client.on("message", function(message) {
         raids.forEach(function(raid, idx) {
             if (raid['time'] < now) {
                 // Old raid
-                console.log(`Pruning old raid: #${idx} ~ ${raid['desc']} on ${moment(raid['time']).format("ddd Do "/*MMM*/+" @ HH:mm")}`)
+                console.log(`Pruning old raid: #${idx} ~ ${raid['desc']} on ${moment(raid['time']).utc().format("ddd Do "/*MMM*/+"@ HH:mm")}`)
                 delete raids[idx]
                 return;
             }
@@ -117,7 +125,7 @@ client.on("message", function(message) {
         // Alert each raid to channel
         var msg = "**Upcoming raids**\n"
         raids.forEach(function(raid, idx) {
-            msg += ` - #${idx} ~ ${raid['desc']} on **${moment(raid['time']).format("ddd Do "/*MMM*/+" @ HH:mm")}**\n`  
+            msg += ` - #${idx} ~ ${raid['desc']} on **${moment(raid['time']).utc().format("ddd Do "/*MMM*/+"@ HH:mm")}**\n`  
         })
         client.reply(message, msg);
     }

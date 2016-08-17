@@ -12,8 +12,8 @@ moment.tz.setDefault(TIMEZONE);
 
 
 var client = new Discord.Client(),
-    invasionFrequencyHours = 4,
-    _cronFrequency = "0 */4 * * *";
+    invasionFrequencyHours = 2,
+    _cronFrequency = "0 */2 * * *";
 
 
 var raids = new Array()

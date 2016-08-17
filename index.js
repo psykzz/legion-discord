@@ -177,6 +177,6 @@ client.loginWithToken(process.env.DISCORD_TOKEN, function (error, token) {
     // Success
     console.log('Successfully logged in');
     new CronJob(_cronFrequency, function() {
-        sendToAll("@here Invasion up!");
+        sendToAll(">> Invasion up!");
     }, null, true, TIMEZONE)
 });

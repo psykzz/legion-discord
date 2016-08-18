@@ -167,6 +167,25 @@ client.on("message", function(message) {
 
         return client.reply(message, `next Invasion starts in ${hour_left} ${text_hour} ${minute_left} ${text_minute}`);
     }
+
+    if (message.content.indexOf('!prune') === 0) {
+        console.log(message);
+        client.getChannelLogs(message.channel, 100)
+        .then(logs => {
+            let messagesToDelete = []
+            for(var message of logs) {
+                if (client.user.id === message.author.id) {
+                    console.log(message)
+                    messagesToDelete.push(message)
+                }
+            }
+            console.log(`[ADMIN] -> Pruning ${messagesToDelete.length} messages`)
+            client.deleteMessages(messagesToDelete)
+            .catch(err => console.log("[ADMIN] -> Unable to delete messages"));
+        })
+        .catch(err => console.log("[ADMIN] -> Couldn't fetch logs"));
+
+    }
 });
 
 client.loginWithToken(process.env.DISCORD_TOKEN, function (error, token) {

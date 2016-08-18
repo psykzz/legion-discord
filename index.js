@@ -169,21 +169,21 @@ client.on("message", function(message) {
     }
 
     if (message.content.indexOf('!prune') === 0) {
-        console.log(message);
         client.getChannelLogs(message.channel, 100)
         .then(logs => {
-            let messagesToDelete = []
+            // let messagesToDelete = []
             for(var message of logs) {
                 if (client.user.id === message.author.id) {
-                    console.log(message)
-                    messagesToDelete.push(message)
+                    message.delete()
+                    .catch(err => console.log(`[ADMIN] -> Unable to delete message because ${err}`));
+                    // messagesToDelete.push(message)
                 }
             }
-            console.log(`[ADMIN] -> Pruning ${messagesToDelete.length} messages`)
-            client.deleteMessages(messagesToDelete)
-            .catch(err => console.log("[ADMIN] -> Unable to delete messages"));
+            // console.log(`[ADMIN] -> Pruning ${messagesToDelete.length} messages`)
+            // client.deleteMessages(messagesToDelete)
+            // .catch(err => console.log(`[ADMIN] -> Unable to delete messages because ${err}`));
         })
-        .catch(err => console.log("[ADMIN] -> Couldn't fetch logs"));
+        .catch(err => console.log(`[ADMIN] -> Couldn't fetch logs `));
 
     }
 });

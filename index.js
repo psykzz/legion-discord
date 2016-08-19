@@ -195,6 +195,7 @@ client.loginWithToken(process.env.DISCORD_TOKEN, function (error, token) {
 
     // Success
     console.log('Successfully logged in');
+    client.setUsername("~Illidan")
     new CronJob(_cronFrequency, function() {
         sendToAll(">> Invasion up!");
     }, null, true, TIMEZONE)
